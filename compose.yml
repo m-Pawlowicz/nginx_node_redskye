@@ -1,0 +1,19 @@
+networks:
+  app_net:
+    driver: bridge
+services:
+  web_nginx:
+    build: ./web
+    hostname: web_nginx
+    networks:
+      - app_net
+    ports:
+      - 80:80
+  nodejs:
+    build: ./be
+    hostname: node
+    networks:
+      - app_net
+    depends_on:
+      - web_nginx
+    
