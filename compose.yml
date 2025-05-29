@@ -8,7 +8,9 @@ services:
     networks:
       - app_net
     ports:
-      - 80:80
+      - 443:443
+    volumes:
+      - /home/michal/letsencrypt-copy/archive/:/etc/nginx/certs/
   nodejs:
     build: ./be
     hostname: node
