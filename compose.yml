@@ -1,21 +1,25 @@
 networks:
   app_net:
     driver: bridge
-services:
+services: 
+  nodejs:
+    build: ./be
+    hostname: node
+    networks:
+      - app_net
+
   web_nginx:
     build: ./web
     hostname: web_nginx
     networks:
       - app_net
     ports:
-      - 443:443
-    volumes:
-      - /home/michal/letsencrypt-copy/archive/:/etc/nginx/certs/
-  nodejs:
-    build: ./be
-    hostname: node
-    networks:
-      - app_net
-    depends_on:
-      - web_nginx
+      - 80:80
+      # no certs so https doesn't work
+      # - 443:443
+    # volumes:
+      # populate certificates to nginx container
+      # but actually this is an anti-pattern, only done it to check if it will work once      
+      # - /home/michal/letsencrypt-copy/archive/:/etc/nginx/certs/
+    
     
